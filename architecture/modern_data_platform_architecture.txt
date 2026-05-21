@@ -1,0 +1,13 @@
+Raw CSV Files
+      ↓
+Snowflake RAW Layer
+      ↓
+Bronze Models
+      ↓
+Silver Models
+      ↓
+Gold Models
+      ↓
+Airflow Orchestration
+      ↓
+Tableau Dashboard

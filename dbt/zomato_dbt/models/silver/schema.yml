@@ -1,0 +1,102 @@
+version: 2
+
+models:
+
+  - name: dim_restaurants
+    description: "Restaurant dimension table"
+
+    columns:
+
+      - name: restaurant_id
+        tests:
+          - unique
+          - not_null
+
+      - name: restaurant_name
+        tests:
+          - not_null
+
+  - name: dim_users
+    description: "User dimension table"
+
+    columns:
+
+      - name: user_id
+        tests:
+          - unique
+          - not_null
+
+      - name: email
+        tests:
+          - not_null
+
+  - name: dim_foods
+    description: "Food dimension table"
+
+    columns:
+
+      - name: food_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_countries
+    description: "Country dimension table"
+
+    columns:
+
+      - name: country_id
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_orders
+    description: "Transactional order fact table"
+
+    columns:
+
+      - name: order_id
+        description: "Unique order identifier"
+        tests:
+          - unique
+          - not_null
+
+      - name: restaurant_id
+        tests:
+          - relationships:
+              to: ref('dim_restaurants')
+              field: restaurant_id
+
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('dim_users')
+              field: user_id
+
+      - name: order_date
+        description: "Date of order"
+
+      - name: order_amount
+        description: "Total order value"
+
+  - name: fact_menu
+    description: "Menu fact table"
+
+    columns:
+
+      - name: menu_id
+        tests:
+          - unique
+          - not_null
+
+      - name: restaurant_id
+        tests:
+          - relationships:
+              to: ref('dim_restaurants')
+              field: restaurant_id
+
+      - name: food_code
+        tests:
+          - relationships:
+              to: ref('dim_foods')
+              field: food_id
